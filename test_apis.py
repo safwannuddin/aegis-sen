@@ -34,6 +34,9 @@ if not gemini_key:
     print("[FAIL] GEMINI_API_KEY is missing from .env")
 else:
     try:
+        # Override OS environment variables directly to fix the SDK bug
+        os.environ['GOOGLE_API_KEY'] = gemini_key
+        genai.configure(api_key=gemini_key)
         # Using the exact verified model name for their specific API key permissions
         model = genai.GenerativeModel('gemini-flash-latest')
         response = model.generate_content("Say the exact word 'Success'")
