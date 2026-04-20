@@ -1,62 +1,122 @@
 {
   "So11111111111111111111111111111111111111112": {
-    "liquidity": 6041436077.941532,
-    "volume_24h": 21097021802.26901,
-    "last_updated": 1776623171.06132,
+    "liquidity": 6026154020.504222,
+    "volume_24h": 21794316651.149353,
+    "last_updated": 1776681393.765762,
     "symbol": "SOL"
   },
   "BiBMG42BrmvJE5gY5UCXLURroGR6tBC1gfcYbZuEpump": {
-    "liquidity": 45835.62137478966,
-    "volume_24h": 39059234.710343495,
-    "last_updated": 1776623171.06132,
+    "liquidity": 27165.707740922062,
+    "volume_24h": 36822925.78607276,
+    "last_updated": 1776626793.726297,
     "symbol": "UNCEROID"
   },
   "8AS5vovu6kDxqxanG316P3gKivZfJ7RKZQT3h9rdvP62": {
-    "liquidity": 262983.67915675114,
-    "volume_24h": 38425840.91626224,
-    "last_updated": 1776623171.06132,
+    "liquidity": 264302.10511141503,
+    "volume_24h": 43354680.088940084,
+    "last_updated": 1776624698.24962,
     "symbol": "RCSC"
   },
   "2HkaEWQtsxp9Yw62ngA3YQZHtqAoLqmainBjVX63D8y1": {
-    "liquidity": 121372.31083366384,
-    "volume_24h": 38241823.26679927,
-    "last_updated": 1776623171.062847,
+    "liquidity": 119564.91671835171,
+    "volume_24h": 42238243.155089445,
+    "last_updated": 1776626793.726297,
     "symbol": "RCSC"
   },
   "3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh": {
-    "liquidity": 6862951.512304385,
-    "volume_24h": 33405074.675784513,
-    "last_updated": 1776623171.062847,
+    "liquidity": 6980846.377585588,
+    "volume_24h": 49487956.50214093,
+    "last_updated": 1776681393.765762,
     "symbol": "WBTC"
   },
   "J2qJB3h5GWQ6uD75nuHNw6gr7prmmMFSH6JP31jGc1hs": {
-    "liquidity": 298806.81984623184,
-    "volume_24h": 32923994.9621528,
-    "last_updated": 1776623171.062847,
+    "liquidity": 329869.28365962417,
+    "volume_24h": 38068354.33175084,
+    "last_updated": 1776624698.24962,
     "symbol": "ASTEROID"
   },
   "7vfCXTUXx5WJV5JADk17DUJ4ksgau7utNKj4b963voxs": {
-    "liquidity": 9558096.649153274,
-    "volume_24h": 29667867.846774787,
-    "last_updated": 1776623171.062847,
+    "liquidity": 9580216.297326278,
+    "volume_24h": 29699899.63122142,
+    "last_updated": 1776626793.726297,
     "symbol": "WETH"
   },
   "FDGqwRbotk1VMD57rZkpF4738b12Ay3GztdSgiG1BFVp": {
-    "liquidity": 104693.06925661207,
-    "volume_24h": 29323626.6111826,
-    "last_updated": 1776623171.062847,
+    "liquidity": 94566.40224562601,
+    "volume_24h": 33274231.718314655,
+    "last_updated": 1776626793.726297,
     "symbol": "RCSC"
   },
   "ukHH6c7mMyiWCf1b9pnWe25TSpkDDt3H5pQZgZ74J82": {
-    "liquidity": 11131916.489651734,
-    "volume_24h": 24779571.42525867,
-    "last_updated": 1776623171.062847,
+    "liquidity": 11201986.369093882,
+    "volume_24h": 30416799.147623666,
+    "last_updated": 1776681393.769421,
     "symbol": "BOME"
   },
   "5wsSVNSJWG2X4mJw5qNCaMNsaGarh58TueTkMfNYodsP": {
-    "liquidity": 247415.76878165308,
-    "volume_24h": 19533278.263833754,
-    "last_updated": 1776623171.062847,
+    "liquidity": 263691.42319736787,
+    "volume_24h": 25350012.167403087,
+    "last_updated": 1776626793.726297,
     "symbol": "BOME"
+  },
+  "6SD1ezY99KmBuEiGWfr8NhGpYoPpBG4Canj1AyHCLbJr": {
+    "liquidity": 246627.88565693775,
+    "volume_24h": 30771773.225800857,
+    "last_updated": 1776626793.726297,
+    "symbol": "BELIEF"
+  },
+  "DSJTxhX1Bj7Mha4cSQD6VjrCYjURWiZj1h3um8gEmpim": {
+    "liquidity": 268240.51754956425,
+    "volume_24h": 28121868.139981307,
+    "last_updated": 1776626793.726297,
+    "symbol": "RCSC"
+  },
+  "HCuEqwoMRic4gg1jRV1Ue5iwkLRxJrgWjsHc353p6jjr": {
+    "liquidity": 289074.6176416557,
+    "volume_24h": 41887885.27371267,
+    "last_updated": 1776681393.765762,
+    "symbol": "RCSC"
+  },
+  "2JGLCQKqoTRgVKMiLVmQTUNb8RgR5nJFHYeX2CgRFGCr": {
+    "liquidity": 303179.712928393,
+    "volume_24h": 36252431.30463852,
+    "last_updated": 1776680493.719319,
+    "symbol": "BOBO"
+  },
+  "CqEr5qiwKeh9bcxk24y8UzQjmSdWCzZWzSoLFHKYSmGK": {
+    "liquidity": 96111.85972831963,
+    "volume_24h": 32944623.152641073,
+    "last_updated": 1776681393.765762,
+    "symbol": "FOF"
+  },
+  "DjeuhFadUVvWdUKwbAzBCcVfELVWqHKYasnYVs1e2UXa": {
+    "liquidity": 286447.654209687,
+    "volume_24h": 32645825.49298369,
+    "last_updated": 1776681393.769421,
+    "symbol": "FOF"
+  },
+  "8f8PQeoGc8EhPnNZtwTd41dj122ZYmJ7pLa2wm3AhbEw": {
+    "liquidity": 95187.38274975853,
+    "volume_24h": 30392569.3188318,
+    "last_updated": 1776681393.769421,
+    "symbol": "RCSC"
+  },
+  "98sMhvDwXj1RQi5c5Mndm3vPe9cBqPrbLaufMXFNMh5g": {
+    "liquidity": 6236743.883146212,
+    "volume_24h": 27458043.852320783,
+    "last_updated": 1776681393.771608,
+    "symbol": "HYPE"
+  },
+  "2bgau1AWrHbn4sFcrwL3L72CvLVYWoC6BjFDoH1iWBVM": {
+    "liquidity": 231407.7598074724,
+    "volume_24h": 29091415.676266372,
+    "last_updated": 1776681393.769421,
+    "symbol": "WCOR"
+  },
+  "FZiQeWFJCvCKG7PCKnbwqNbz8StQ3VEBZqoJVcE3e21t": {
+    "liquidity": 288902.22459599574,
+    "volume_24h": 28544953.059094694,
+    "last_updated": 1776681393.769421,
+    "symbol": "RCSC"
   }
 }
