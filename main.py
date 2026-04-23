@@ -4,6 +4,7 @@ Autonomous threat detection engine with background polling.
 """
 from fastapi import FastAPI, BackgroundTasks
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
 import os
@@ -17,6 +18,15 @@ from src.config import POLL_INTERVAL_SECONDS, RISK_SCORE_AI_THRESHOLD
 load_dotenv()
 
 app = FastAPI(title="AEGIS Sentinel", version="1.0.0")
+
+# CORS middleware for React frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://localhost:3000", "*"],  # React dev server
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Global state
 threat_log = []
