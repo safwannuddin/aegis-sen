@@ -29,6 +29,7 @@ app.add_middleware(
 )
 
 # Global state
+radar_log = []
 threat_log = []
 stats = {
     'tokens_scanned': 0,
@@ -57,8 +58,24 @@ def scan_and_analyze():
     print(f"\n[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] === AEGIS SCAN CYCLE ===")
     
     # Step 1: Scan tokens with heuristics
-    high_risk_tokens = birdeye.scan_tokens()
-    stats['tokens_scanned'] += 10  # We scan 10 per cycle
+    tokens = birdeye.scan_tokens()
+    stats['tokens_scanned'] += len(tokens)
+    
+    # Update radar log (keep last 100)
+    for token in tokens:
+        radar_log.append({
+            'timestamp': datetime.now().isoformat(),
+            'token': token['symbol'],
+            'address': token['address'],
+            'risk_score': token['risk_score'],
+            'metrics': token['metrics'],
+            'flags': token['flags']
+        })
+    
+    if len(radar_log) > 100:
+        radar_log = radar_log[-100:]
+        
+    high_risk_tokens = [t for t in tokens if t['risk_score'] > 0]
     stats['anomalies_detected'] += len(high_risk_tokens)
     stats['last_scan'] = datetime.now().isoformat()
     
@@ -140,7 +157,16 @@ async def get_threats():
     """Get recent threat detections."""
     return {
         "total": len(threat_log),
-        "threats": threat_log[-10:]  # Last 10 threats
+        "threats": threat_log[-20:]  # Last 20 threats
+    }
+
+
+@app.get("/radar")
+async def get_radar():
+    """Get full radar stream of scanned tokens."""
+    return {
+        "total": len(radar_log),
+        "radar": radar_log[-20:]  # Last 20 tokens for the dashboard
     }
 
 

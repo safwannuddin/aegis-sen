@@ -14,7 +14,7 @@ GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 # Birdeye API Configuration
 BIRDEYE_BASE_URL = "https://public-api.birdeye.so"
 BIRDEYE_CHAIN = "solana"
-POLL_INTERVAL_SECONDS = 300  # 5 minutes
+POLL_INTERVAL_SECONDS = 30  # 30 seconds for live radar
 
 # API Rate Limiting
 MAX_TOKENS_PER_POLL = 10  # Only analyze top 10 trending tokens

@@ -56,73 +56,48 @@ class BirdeyeEngine:
             if self.cache[token_addr].get('last_updated', 0) < cutoff_ts:
                 del self.cache[token_addr]
     
-    def fetch_trending_tokens(self) -> Optional[List[Dict]]:
-        """Fetch top trending tokens from Birdeye."""
-        url = f"{BIRDEYE_BASE_URL}/defi/token_trending"
+    def fetch_new_listings(self) -> Optional[List[Dict]]:
+        """Fetch the most recent token listings on Solana."""
+        url = f"{BIRDEYE_BASE_URL}/defi/v2/tokens/new_listing"
         params = {
-            "sort_by": "volume24hUSD",
-            "sort_type": "desc",
-            "offset": 0,
-            "limit": MAX_TOKENS_PER_POLL
+            "limit": 10
         }
         
         try:
             response = requests.get(url, headers=self.headers, params=params, timeout=REQUEST_TIMEOUT)
             response.raise_for_status()
             data = response.json()
-            return data.get('data', {}).get('tokens', [])
+            return data.get('data', {}).get('items', [])
         except requests.exceptions.RequestException as e:
-            print(f"[ERROR] Birdeye API fetch failed: {e}")
+            print(f"[ERROR] Birdeye API fetch (new_listing) failed: {e}")
             return None
-    
+
     def calculate_risk_score(self, token: Dict) -> Dict:
-        """Apply heuristic rules and compute Risk Score (0-100)."""
+        """Apply heuristic rules to new listings and compute Risk Score (0-100)."""
         address = token.get('address')
         risk_score = 0
         flags = []
         
-        # Extract metrics from trending endpoint
         liquidity = token.get('liquidity', 0)
-        volume_24h = token.get('volume24hUSD', 0)
         
-        # Check cache for historical comparison
-        cached = self.cache.get(address, {})
-        prev_liquidity = cached.get('liquidity', liquidity)
-        prev_volume = cached.get('volume_24h', volume_24h)
-        
-        # Rule 1: Liquidity Drop
-        if prev_liquidity > 0 and liquidity > 0:
-            liquidity_drop = (prev_liquidity - liquidity) / prev_liquidity
-            if liquidity_drop > LIQUIDITY_DROP_THRESHOLD:
-                risk_score += WEIGHT_LIQUIDITY
-                flags.append(f"Liquidity dropped {liquidity_drop*100:.1f}%")
-        
-        # Rule 2: Low Liquidity (< $10k is suspicious for trending tokens)
-        if liquidity < 10000:
-            risk_score += WEIGHT_PRICE_VOLATILITY
-            flags.append(f"Low liquidity: ${liquidity:,.0f}")
-        
-        # Rule 3: Trade Velocity Spike
-        if prev_volume > 0 and volume_24h > 0:
-            velocity_ratio = volume_24h / prev_volume
-            if velocity_ratio > TRADE_VELOCITY_MULTIPLIER:
-                risk_score += WEIGHT_TRADE_VELOCITY
-                flags.append(f"Trade velocity spike: {velocity_ratio:.1f}x")
-        
-        # Rule 4: Suspicious Volume/Liquidity Ratio (> 50x suggests wash trading)
-        if liquidity > 0:
-            vol_liq_ratio = volume_24h / liquidity
-            if vol_liq_ratio > 50:
-                risk_score += WEIGHT_HOLDER_CONCENTRATION
-                flags.append(f"Suspicious vol/liq ratio: {vol_liq_ratio:.1f}x")
-        
-        # Update cache
-        self.cache[address] = {
-            'liquidity': liquidity,
-            'volume_24h': volume_24h,
-            'last_updated': datetime.now().timestamp(),
-            'symbol': token.get('symbol', 'UNKNOWN')
-        }
+        # Rule 1: Nano Liquidity (Extremely high risk for new pools)
+        if liquidity < 5000:
+            risk_score += 40
+            flags.append(f"Nano liquidity: ${liquidity:,.0f}")
+        elif liquidity < 20000:
+            risk_score += 20
+            flags.append(f"Low initial liquidity: ${liquidity:,.0f}")
+            
+        # Rule 2: Generic metadata (often used by automated rug bots)
+        name = token.get('name', '').lower()
+        if any(word in name for word in ['inu', 'doge', 'pepe', 'moon', 'safe']):
+            risk_score += 10
+            flags.append("Generic 'meme' metadata detected")
+
+        # Rule 3: Fast listing detection
+        # New listings are inherently risky until verified
+        risk_score += 20
+        flags.append("Unverified new listing")
         
         return {
             'address': address,
@@ -132,22 +107,22 @@ class BirdeyeEngine:
             'flags': flags,
             'metrics': {
                 'liquidity': liquidity,
-                'volume_24h': volume_24h,
-                'vol_liq_ratio': volume_24h / liquidity if liquidity > 0 else 0
+                'volume_24h': 0, # New listings won't have 24h vol yet
+                'vol_liq_ratio': 0
             }
         }
     
     def scan_tokens(self) -> List[Dict]:
-        """Main polling loop: fetch tokens, score them, return high-risk ones."""
-        print(f"[{datetime.now().strftime('%H:%M:%S')}] Starting token scan...")
+        """Main polling loop: focus on new listings for real-time radar."""
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Initializing Intelligence Radar...")
         
-        # Fetch trending tokens
-        tokens = self.fetch_trending_tokens()
+        # Fetch new listings
+        tokens = self.fetch_new_listings()
         if not tokens:
-            print("[WARN] No tokens fetched. Skipping scan.")
+            print("[WARN] No new listings fetched. Skipping scan.")
             return []
         
-        print(f"[INFO] Fetched {len(tokens)} trending tokens")
+        print(f"[INFO] Scanning {len(tokens)} recent listings")
         
         # Score each token
         results = []
@@ -155,14 +130,10 @@ class BirdeyeEngine:
             risk_result = self.calculate_risk_score(token)
             results.append(risk_result)
             
-            if risk_result['risk_score'] > 0:
-                print(f"[ALERT] {risk_result['symbol']} | Risk: {risk_result['risk_score']} | {risk_result['flags']}")
+            if risk_result['risk_score'] >= 50:
+                print(f"[RADAR_ALERT] {risk_result['symbol']} | Risk: {risk_result['risk_score']} | {risk_result['flags']}")
         
-        # Clean old cache and save
-        self._clean_old_cache()
-        self._save_cache()
-        
-        return [r for r in results if r['risk_score'] > 0]
+        return results
 
 
 def test_engine():
